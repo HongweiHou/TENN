@@ -38,6 +38,9 @@ This toolbox includes several pluggable neural modules, each aligned with a theo
 | **MDI**<br>     | `TE_models/TE_module.py`      | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times D_O$                |
 
 
+<!-- 在这里插入图片，文字会自动环绕 -->
+<img src="assets/page1.png" align="right" width="200px" hspace="10" alt="Paper Preview" />
+
 ### 📌 Example 1: Precoding
 The `PrecodingTECFP` network includes:
 - A multidimensional equivariant network
