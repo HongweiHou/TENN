@@ -1,11 +1,28 @@
 # TENN Toolbox
 ## [Pytorch](https://github.com/zhangjinshuowww/TensorEquivariantNN) | [Paper](https://arxiv.org/pdf/2406.09022)
 
-A PyTorch-based implementation of the training code for the paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
+A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as MU-MIMO precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
 
-## Project Overview
+## 🔍 Overview
 
-The project consists of two main components: **Precoding** and **Scheduling**.
+This toolbox implements a unified framework for leveraging **multidimensional equivariance**, **high-order equivariance**, and **multidimensional invariance** in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting tensor-level property.
+
+- 📦 **Modular**: Drop-in layers for various types of equivariance.
+- 🌐 **Unified**: Compatible with data- and model-driven approaches, as well as to supervised, unsupervised, and other learning paradigms.
+- ↗️ **Scalable**: Generalizes to varying input sizes without retraining.
+- ⚡ **Efficient**: Requires fewer parameters, lower computational complexity, and smaller training sets.
+- 📡 **Application-ready**: Comes with precoding and scheduling examples for MU-MIMO.
+
+## ✨ Core Concepts
+
+Tensor Equivariance (TE) generalizes the concept of permutation equivariance to high-dimensional tensors. It includes:
+
+- **Multidimensional Equivariance (MDE)**: Permuting each tensor dimension independently results in the same permutation at the output.
+- **High-Order Equivariance (HOE)**: The same permutation is applied across multiple dimensions simultaneously.
+- **Multidimensional Invariance (MDI)**: Output remains unchanged under permutations along specified dimensions.
+
+Fig. 1 in this paper:
+
 
 ### Precoding
 The `PrecodingTECFP` network includes:
