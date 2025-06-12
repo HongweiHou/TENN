@@ -3,9 +3,19 @@
 
 A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as MU-MIMO precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
 
-## 🔍 Overview
+## 🧊 Core Concepts
 
-This toolbox implements a unified framework for leveraging **multidimensional equivariance**, **high-order equivariance**, and **multidimensional invariance** in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting the inherent tensor equivariance of the target mapping.
+This toolbox implements a unified framework for leveraging Tensor Equivariance (TE) in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting the inherent tensor equivariance of the target mapping. 
+TE generalizes the concept of permutation equivariance to high-dimensional tensors. It includes:
+
+- **Multidimensional Equivariance (MDE)**: Permuting each tensor dimension independently results in the same permutation at the output.
+- **High-Order Equivariance (HOE)**: The same permutation is applied across multiple dimensions simultaneously.
+- **Multidimensional Invariance (MDI)**: Output remains unchanged under permutations along specified dimensions.
+
+Some examples of TE:
+![image](imgs/MDPE.png)
+
+## ✨ Key Features
 
 - 📦 **Modular**: Drop-in layers for various types of equivariance.
 - 🌐 **Unified**: Compatible with data- and model-driven approaches, as well as to supervised, unsupervised, and other learning paradigms.
@@ -13,26 +23,16 @@ This toolbox implements a unified framework for leveraging **multidimensional eq
 - ⚡ **Efficient**: Requires fewer parameters, lower computational complexity, and smaller training sets.
 - 📡 **Application-ready**: Comes with precoding and scheduling examples for MU-MIMO.
 
-## ✨ Core Concepts
-
-Tensor Equivariance (TE) generalizes the concept of permutation equivariance to high-dimensional tensors. It includes:
-
-- **Multidimensional Equivariance (MDE)**: Permuting each tensor dimension independently results in the same permutation at the output.
-- **High-Order Equivariance (HOE)**: The same permutation is applied across multiple dimensions simultaneously.
-- **Multidimensional Invariance (MDI)**: Output remains unchanged under permutations along specified dimensions.
-
-Fig. 1 in this paper:
-![image](imgs/MDPE.png)
 
 ## 🔧 Module Introduction
 
 This toolbox includes several pluggable neural modules, each aligned with a theoretical symmetry property:
 
-| Module | Location | Function |
-|--------|----------|----------|
-| name | path | description |
-| name | path | description |
-| name | path | description |
+| Module | Location | Function | Input Dimension | Output Dimension|
+|--------|----------|----------|----------|----------|
+| Multidimensional Equivariant Module | `tensor_equivariance/modules/equivariant_invariant.py` | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions. | ${\rm bs}\times M_1\times M_2\times \cdots \times M_N \times D_{\rm I}$ | ${\rm bs}\times M_1\times M_2\times \cdots \times M_N \times D_{\rm O}$
+| High-Order Equivariant Module | path | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example) | ${\rm bs}\times M \times D_{\rm I}$ | ${\rm bs}\times M \times M \times D_{\rm I}$ 
+| Multidimensional Invariant Module | path | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions. | ${\rm bs}\times M_1\times M_2\times \cdots \times M_N \times D_{\rm I}$ | ${\rm bs}\times D_{\rm O}$
 
 
 
