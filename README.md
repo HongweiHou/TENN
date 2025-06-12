@@ -1,11 +1,11 @@
 # TENN Toolbox
-## [Pytorch](https://github.com/zhangjinshuowww/TensorEquivariantNN) | [Paper](https://arxiv.org/pdf/2406.09022)
+## [Code (Pytorch)](https://github.com/zhangjinshuowww/TensorEquivariantNN) | [Paper (Arxiv)](https://arxiv.org/abs/2406.09022)
 
 A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as MU-MIMO precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
 
 ## 🧊 Core Concepts
 
-This toolbox implements a unified framework for leveraging Tensor Equivariance (TE) in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting the inherent tensor equivariance of the target mapping. 
+This toolbox implements a unified framework for leveraging **Tensor Equivariance (TE)** in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting the inherent tensor equivariance of the target mapping. 
 TE generalizes the concept of permutation equivariance to high-dimensional tensors. It includes:
 
 - **Multidimensional Equivariance (MDE)**: Permuting each tensor dimension independently results in the same permutation at the output.
@@ -21,7 +21,7 @@ Some examples of TE:
 - 🌐 **Unified**: Compatible with data- and model-driven approaches, as well as to supervised, unsupervised, and other learning paradigms.
 - ↗️ **Scalable**: Generalizes to varying input sizes without retraining.
 - ⚡ **Efficient**: Requires fewer parameters, lower computational complexity, and smaller training sets.
-- 📡 **Application-ready**: Comes with precoding and scheduling examples for MU-MIMO.
+- 📡 **Application-ready**: Comes with precoding and scheduling examples for MU-MIMO communications.
 
 
 ## 🔧 Module Introduction
@@ -30,14 +30,12 @@ This toolbox includes several pluggable neural modules, each aligned with a theo
 
 | Module 🧩 (abbr.)                           | Location 📂                   | Function ⚙️                                               | Dimensions 🔢                                                                                   |
 |:-------------------------------------------|:------------------------------|:----------------------------------------------------------|:-----------------------------------------------------------------------------------------------|
-| **MDE**<br>    | `TE_models/TE_module.py`      | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions.  | **In**: <br> $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M_1\times…\times M_N\times D_O$ |
+| **MDE**<br>    | `TE_models/TE_module.py`      | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions.  | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_O$ |
 | **HOE**<br>         | `TE_models/TE_module.py`      | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example).           | **In**: <br> $\mathrm{bs}\times M\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M\times M\times D_I$   |
-| **MDI**<br>     | `TE_models/TE_module.py`      | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: <br> $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times D_O$                |
+| **MDI**<br>     | `TE_models/TE_module.py`      | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: <br> $\mathrm{bs}\times M_1\time \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times D_O$                |
 
 
-
-
-### Precoding
+### 📌 Example 1: Precoding
 The `PrecodingTECFP` network includes:
 - A multidimensional equivariant network
 - A multidimensional invariant module
@@ -45,7 +43,7 @@ The `PrecodingTECFP` network includes:
 
 This precoding network maps Channel State Information (CSI) to optimal precoding tensors and auxiliary tensors, solving the WMMSE precoding problem as described in the paper.
 
-### Scheduling
+### 📌 Example 2: Scheduling
 The `SchedulingTEUSN` network, trained with both WMMSE and MMSE encoding methods, includes:
 - A multidimensional equivariant network
 - A multidimensional invariant module
@@ -54,27 +52,30 @@ This scheduling network maps CSI to scheduling indicators.
 
 ## Project Structure
 
-### data
+### `TE_models/`
+Contains core model definitions:
+- `init_func.py`: Initialization functions, common utilities, and parameter management classes
+- `TE_models.py`: Multidimensional equivariant network and pattern-generation functions
+- `TE_module.py`: Multidimensional equivariant and invariant modules, and high-order equivariant module
+
+### `data/`
 Contains training and testing data
 
-#### Precoding Training Data:
+**For Example 1 (Precoding):**
 - Channel data files named `"data_name.mat"` with dimensions `[sample_num, ue_num, rx_ant_num, tx_ant_num]`
 
-#### Scheduling Training Data:
+**For Example 2 (Scheduling):**
 - Channel data files named `"data_name.mat"` with dimensions `[sample_num, ue_num, rx_ant_num, tx_ant_num]`
 - Eta label files named `"data_name_etaMMSE"` or `"data_name_etaWMMSE"` with dimensions `[sample_num, snr_num, ue_num]`
 
-### precoding
-Contains code related to the precoding model:
+### `examples/precoding/`
+Contains precoding-related models and training code:
 - `precoding_func.py`: Training and testing functions
 - `precoding_models.py`: Network model definitions and related functions
 - `precoding_test.py`: Main testing program
 - `precoding_train.py`: Main training program
 
-### save_models
-Stores network training results
-
-### scheduling
+### `examples/scheduling/`
 Contains scheduling-related models and training code:
 - `scheduling_func.py`: Training and testing functions
 - `scheduling_MMSE_test.py`: Testing program for MMSE-trained network
@@ -83,11 +84,8 @@ Contains scheduling-related models and training code:
 - `scheduling_WMMSE_train.py`: Training program for WMMSE labels
 - `scheduling_models.py`: Network model definitions and related functions
 
-### TE_models
-Contains core model definitions:
-- `init_func.py`: Initialization functions, common utilities, and parameter management classes
-- `TE_models.py`: Multidimensional equivariant network and pattern-generation functions
-- `TE_module.py`: Multidimensional equivariant and invariant modules, and high-order equivariant module
+### `save_models/`
+Stores network training results
 
 ## Usage
 
@@ -137,7 +135,6 @@ mdi_module = MDI_Module(
 output = mdi_module(input_tensor)
 ```
 
-
 ## 📚 Citation
 
 If you use this toolbox in your research, please cite our [paper](https://arxiv.org/pdf/2406.09022):
@@ -146,16 +143,16 @@ If you use this toolbox in your research, please cite our [paper](https://arxiv.
 
 ```bibtex
 @article{wang2025tensor,
-  title={Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework},
-  author={Wang, Yafei and Hou, Hongwei and Yi, Xinping and Wang, Wenjin and Jin, Shi},
-  journal={IEEE Transactions on Wireless Communications},
-  year={2025},
+  title    = {Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework},
+  author   = {Wang, Yafei and Hou, Hongwei and Yi, Xinping and Wang, Wenjin and Jin, Shi},
+  journal  = {IEEE Transactions on Wireless Communications},
+  year     = {2025},
 }
 ```
 
 
 ## 🤝 Acknowledgments
-We thank Jinshuo Zhang (a graduate student at Southeast University) for his efforts in organizing and polishing the code for open-source release. We also sincerely thank all the reviewers and editors of this paper for their insightful comments and valuable suggestions.
+We are grateful to Jinshuo Zhang (Southeast University) for his dedicated efforts in preparing and refining the code for open-source release. We also sincerely thank all the reviewers and editors of this paper for their insightful comments and valuable suggestions.
 
 
 
