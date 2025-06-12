@@ -18,7 +18,7 @@ Some examples of TE:
 ## ✨ Key Features
 
 - 📦 **Modular**: Drop-in layers for various types of equivariance.
-- 🌐 **Unified**: Compatible with data- and model-driven approaches, as well as to supervised, unsupervised, and other learning paradigms.
+- 🌐 **Unified**: Compatible with data/model-driven approaches, as well as to supervised, unsupervised, and other learning paradigms.
 - ↗️ **Scalable**: Generalizes to varying input sizes without retraining.
 - ⚡ **Efficient**: Requires fewer parameters, lower computational complexity, and smaller training sets.
 - 📡 **Application-ready**: Comes with precoding and scheduling examples for MU-MIMO communications.
