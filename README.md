@@ -22,6 +22,18 @@ Tensor Equivariance (TE) generalizes the concept of permutation equivariance to 
 - **Multidimensional Invariance (MDI)**: Output remains unchanged under permutations along specified dimensions.
 
 Fig. 1 in this paper:
+![image](imgs/MDPE.png)
+
+## 🔧 Module Introduction
+
+This toolbox includes several pluggable neural modules, each aligned with a theoretical symmetry property:
+
+| Module | Location | Function |
+|--------|----------|----------|
+| name | path | description |
+| name | path | description |
+| name | path | description |
+
 
 
 ### Precoding
