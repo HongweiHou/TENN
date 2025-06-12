@@ -1,4 +1,4 @@
-# TENN Toolbox
+# 🧊 TENN Toolbox
 
 [![Code (GitHub)](https://img.shields.io/badge/Code-GitHub-blue?logo=github)](https://github.com/zhangjinshuowww/TensorEquivariantNN)
 [![Paper (arXiv)](https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv)](https://arxiv.org/abs/2406.09022)
@@ -6,7 +6,7 @@
 
 A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as multi-user multiple-input multiple-output (MU-MIMO) precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
 
-## 🧊 Core Concepts
+## 🧠 Core Concepts
 
 This toolbox implements a unified framework for leveraging **Tensor Equivariance (TE)** in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting the inherent tensor equivariance of the target mapping. 
 TE generalizes the concept of permutation equivariance to high-dimensional tensors. It includes:
