@@ -53,7 +53,7 @@ The `SchedulingTEUSN` network, trained with both WMMSE and MMSE encoding methods
 
 This scheduling network maps CSI to scheduling indicators.
 
-## Project Structure
+## 🏗️ Project Structure
 
 ### `TE_models/`
 Contains core model definitions:
