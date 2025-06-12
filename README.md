@@ -28,11 +28,12 @@ Some examples of TE:
 
 This toolbox includes several pluggable neural modules, each aligned with a theoretical symmetry property:
 
-| Module 🧩                        | Location 📂                                                             | Function ⚙️                                                                          | Input Dim 📥                | Output Dim 📤               |
-|:--------------------------------|:----------------------------------------------------------------------|:-------------------------------------------------------------------------------------|:---------------------------:|:---------------------------:|
-| **Multidimensional Equivariant**<br><sub>MDE</sub> | <code>tensor_equivariance/modules/equivariant_invariant.py</code>      | Equivariant linear layer preserving permutations across N modes.                     | <code>bs×M₁×…×Mₙ×D<sub>I</sub></code> | <code>bs×M₁×…×Mₙ×D<sub>O</sub></code> |
-| **High-Order Equivariant**<br><sub>HOE</sub>      | <code>tensor_equivariance/modules/equivariant_invariant.py</code>      | Equivariant mappings for p→q mode permutations (e.g., 1→2-order equivariance).       | <code>bs×M×D<sub>I</sub></code>      | <code>bs×M×M×D<sub>I</sub></code>     |
-| **Multidimensional Invariant**<br><sub>MDI</sub>  | <code>tensor_equivariance/modules/equivariant_invariant.py</code>      | Attention-based pooling invariant to any mode permutations.                          | <code>bs×M₁×…×Mₙ×D<sub>I</sub></code> | <code>bs×D<sub>O</sub></code>        |
+| Module 🧩 (abbr.)                           | Location 📂                   | Function ⚙️                                               | Dimensions 🔢                                                                                   |
+|:-------------------------------------------|:------------------------------|:----------------------------------------------------------|:-----------------------------------------------------------------------------------------------|
+| **MDE**<br>    | `TE_models/TE_module.py`      | Equivariant linear layer preserving N-mode permutations.  | **In**: $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: $\mathrm{bs}\times M_1\times…\times M_N\times D_O$ |
+| **HOE**<br>         | `TE_models/TE_module.py`      | p→q mode equivariance mappings (e.g. 1→2 order).           | **In**: $\mathrm{bs}\times M\times D_I$  <br> **Out**: $\mathrm{bs}\times M\times M\times D_I$   |
+| **MDI**<br>     | `TE_models/TE_module.py`      | Attention pooling invariant to any mode permutations.     | **In**: $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: $\mathrm{bs}\times D_O$                |
+
 
 
 
