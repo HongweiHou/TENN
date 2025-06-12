@@ -5,7 +5,7 @@ A unified, plug-and-play toolbox for building tensor equivariant neural networks
 
 ## 🔍 Overview
 
-This toolbox implements a unified framework for leveraging **multidimensional equivariance**, **high-order equivariance**, and **multidimensional invariance** in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting tensor-level property.
+This toolbox implements a unified framework for leveraging **multidimensional equivariance**, **high-order equivariance**, and **multidimensional invariance** in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting the inherent tensor equivariance of the target mapping.
 
 - 📦 **Modular**: Drop-in layers for various types of equivariance.
 - 🌐 **Unified**: Compatible with data- and model-driven approaches, as well as to supervised, unsupervised, and other learning paradigms.
