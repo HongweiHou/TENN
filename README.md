@@ -20,10 +20,10 @@ Some examples of TE:
 
 ## ✨ Key Features
 
-- 📦 **Modular**: Drop-in layers for various types of equivariance.
-- 🌐 **Unified**: Compatible with data/model-driven approaches, as well as various learning paradigms.
-- ↗️ **Scalable**: Generalizes to varying input sizes without retraining.
+- 🌱 **Scalable**: Generalizes to varying input sizes without retraining.
 - ⚡ **Efficient**: Requires fewer parameters, lower computational complexity, and smaller training sets.
+- 🌐 **Unified**: Compatible with data/model-driven approaches, as well as various learning paradigms.
+- 📦 **Modular**: Drop-in layers for various types of equivariance.
 - 📡 **Application-ready**: Comes with precoding and scheduling examples for MU-MIMO communications.
 
 
@@ -31,7 +31,7 @@ Some examples of TE:
 
 This toolbox includes several pluggable neural modules, each aligned with a theoretical symmetry property:
 
-| Module 🧩 (abbr.)                           | Function ⚙️                                               | Dimensions 🔢                                                                                   |
+| Module 🧩 (abbr.)                           | Function ⚙️                                               | Dimensions ♾️                                                                                   |
 |:-------------------------------------------|:----------------------------------------------------------|:-----------------------------------------------------------------------------------------------|
 | **MDE**<br>    | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions.  | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_O$ |
 | **HOE**<br>        | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example).           | **In**: <br> $\mathrm{bs}\times M\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M\times M\times D_I$   |
@@ -47,7 +47,7 @@ The `PrecodingTECFP` network includes:
 - A multidimensional invariant module
 - A high-order equivariant module
 
-This precoding network maps Channel State Information (CSI) to optimal precoding tensors and auxiliary tensors, solving the WMMSE precoding problem as described in the paper.
+Under the model-driven approach, the network maps the CSI to the optimal auxiliary variables in the closed-form precoding expression, solving the WMMSE precoding problem for MU-MIMO systems.
 
 <br>
 <br>
@@ -60,7 +60,7 @@ The `SchedulingTEUSN` network, trained with both WMMSE and MMSE encoding methods
 - A multidimensional equivariant network
 - A multidimensional invariant module
 
-This scheduling network maps CSI to scheduling indicators.
+Under the data-driven approach, the network maps the CSI to the optimal user scheduling indicator, solving the user scheduling optimization problem in MU-MIMO systems.
 
 <br>
 <br>
