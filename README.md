@@ -8,8 +8,8 @@ A unified, plug-and-play toolbox for building tensor equivariant neural networks
 
 ## 🧠 Core Concepts
 
-This toolbox implements a unified framework for leveraging **Tensor Equivariance (TE)** in neural network design. It enables scalable and efficient learning in AI-assisted wireless communication systems by exploiting the inherent tensor equivariance of the target mapping. 
-TE generalizes the concept of permutation equivariance to high-dimensional tensors. It includes:
+This toolbox implements a unified framework for leveraging **Tensor Equivariance (TE)** into neural network design. ***By exploiting the inherent TE of the target mapping, it facilitates scalable and efficient learning in AI-assisted wireless communication systems***.
+TE extends the concept of permutation equivariance to high-dimensional tensors and includes:
 
 - **Multidimensional Equivariance (MDE)**: Permuting each tensor dimension independently results in the same permutation at the output.
 - **High-Order Equivariance (HOE)**: The same permutation is applied across multiple dimensions simultaneously.
