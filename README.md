@@ -1,4 +1,5 @@
 # TENN Toolbox
+### Pytorch | Paper
 
 A PyTorch-based implementation of the training code for the paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
 
