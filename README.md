@@ -4,7 +4,7 @@
 [![Paper (arXiv)](https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv)](https://arxiv.org/abs/2406.09022)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as MU-MIMO precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
+A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as multi-user multiple-input multiple-output (MU-MIMO) precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
 
 ## 🧊 Core Concepts
 
@@ -74,7 +74,7 @@ Contains core model definitions:
 - `TE_module.py`: Multidimensional equivariant and invariant modules, and high-order equivariant module
 
 ### `examples/data/`
-Contains training and testing data.
+Folder for storing training and testing data.
 
 **For Example 1 (Precoding):**
 - Channel data files named `"data_name.mat"` with dimensions `[sample_num, ue_num, rx_ant_num, tx_ant_num]`
@@ -106,7 +106,7 @@ Stores network training results.
 
 ### Multidimensional Equivariant Network (MDE_Network)
 
-The `MDE_Network` class implements a multidimensional equivariant neural network architecture.
+The `MDE_Network` class implements a multidimensional equivariant neural network architecture.  It is constructed by stacking MDE modules and allows for significant reduction in parameter count and computational complexity by selecting different patterns, while preserving performance as much as possible (see Section III-A of the paper for the design and selection of patterns).
 #### Basic Usage
 
 ```python
