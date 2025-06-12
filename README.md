@@ -39,7 +39,7 @@ This toolbox includes several pluggable neural modules, each aligned with a theo
 
 
 <!-- 在这里插入图片，文字会自动环绕 -->
-<img src="assets/page1.png" align="right" width="200px" hspace="10" alt="Paper Preview" />
+<img src="imgs/MDPE_CFPN.pdf" align="right" width="200px" hspace="10" alt="Paper Preview" />
 
 ### 📌 Example 1: Precoding
 The `PrecodingTECFP` network includes:
