@@ -1,5 +1,8 @@
 # TENN Toolbox
-## [Code (Pytorch)](https://github.com/zhangjinshuowww/TensorEquivariantNN) | [Paper (Arxiv)](https://arxiv.org/abs/2406.09022)
+
+[![Code (GitHub)](https://img.shields.io/badge/Code-GitHub-blue?logo=github)](https://github.com/zhangjinshuowww/TensorEquivariantNN)
+[![Paper (arXiv)](https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv)](https://arxiv.org/abs/2406.09022)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as MU-MIMO precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
 
@@ -32,7 +35,7 @@ This toolbox includes several pluggable neural modules, each aligned with a theo
 |:-------------------------------------------|:------------------------------|:----------------------------------------------------------|:-----------------------------------------------------------------------------------------------|
 | **MDE**<br>    | `TE_models/TE_module.py`      | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions.  | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_O$ |
 | **HOE**<br>         | `TE_models/TE_module.py`      | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example).           | **In**: <br> $\mathrm{bs}\times M\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M\times M\times D_I$   |
-| **MDI**<br>     | `TE_models/TE_module.py`      | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: <br> $\mathrm{bs}\times M_1\time \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times D_O$                |
+| **MDI**<br>     | `TE_models/TE_module.py`      | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times D_O$                |
 
 
 ### 📌 Example 1: Precoding
@@ -58,8 +61,8 @@ Contains core model definitions:
 - `TE_models.py`: Multidimensional equivariant network and pattern-generation functions
 - `TE_module.py`: Multidimensional equivariant and invariant modules, and high-order equivariant module
 
-### `data/`
-Contains training and testing data
+### `examples/data/`
+Contains training and testing data.
 
 **For Example 1 (Precoding):**
 - Channel data files named `"data_name.mat"` with dimensions `[sample_num, ue_num, rx_ant_num, tx_ant_num]`
@@ -69,14 +72,14 @@ Contains training and testing data
 - Eta label files named `"data_name_etaMMSE"` or `"data_name_etaWMMSE"` with dimensions `[sample_num, snr_num, ue_num]`
 
 ### `examples/precoding/`
-Contains precoding-related models and training code:
+Contains precoding-related models and training code (Example 1):
 - `precoding_func.py`: Training and testing functions
 - `precoding_models.py`: Network model definitions and related functions
 - `precoding_test.py`: Main testing program
 - `precoding_train.py`: Main training program
 
 ### `examples/scheduling/`
-Contains scheduling-related models and training code:
+Contains scheduling-related models and training code (Example 2):
 - `scheduling_func.py`: Training and testing functions
 - `scheduling_MMSE_test.py`: Testing program for MMSE-trained network
 - `scheduling_WMMSE_test.py`: Testing program for WMMSE-trained network
@@ -84,8 +87,8 @@ Contains scheduling-related models and training code:
 - `scheduling_WMMSE_train.py`: Training program for WMMSE labels
 - `scheduling_models.py`: Network model definitions and related functions
 
-### `save_models/`
-Stores network training results
+### `examples/save_models/`
+Stores network training results.
 
 ## Usage
 
@@ -98,7 +101,7 @@ The `MDE_Network` class implements a multidimensional equivariant neural network
 from TE_models import MDE_Network
 from TE_models import generate_patterns
 
-# define the pattern of the network
+# Define the pattern of the network
 MDE_dim_list = generate_patterns(n_layer=3, n_dim=3, pattern='original')
 
 # Initialize the network
@@ -137,30 +140,19 @@ output = mdi_module(input_tensor)
 
 ## 📚 Citation
 
-If you use this toolbox in your research, please cite our [paper](https://arxiv.org/pdf/2406.09022):
+If you use this toolbox in your research, please cite our [paper](https://arxiv.org/abs/2406.09022):
 
-> Y. Wang, H. Hou, X. Yi, W. Wang, S. Jin, “Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework,” _IEEE Transactions on Wireless Communications_, 2025.
+> Y. Wang, H. Hou, X. Yi, W. Wang, S. Jin, “Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework,” _arXiv:2406.09022_, 2024.
 
 ```bibtex
-@article{wang2025tensor,
+@article{wang2024towards,
   title    = {Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework},
   author   = {Wang, Yafei and Hou, Hongwei and Yi, Xinping and Wang, Wenjin and Jin, Shi},
-  journal  = {IEEE Transactions on Wireless Communications},
-  year     = {2025},
+  journal  = {arXiv preprint arXiv:2406.09022},
+  year     = {2024},
 }
 ```
 
 
 ## 🤝 Acknowledgments
 We are grateful to Jinshuo Zhang (Southeast University) for his dedicated efforts in preparing and refining the code for open-source release. We also sincerely thank all the reviewers and editors of this paper for their insightful comments and valuable suggestions.
-
-
-
-
-
-
-
-
-
-
-
