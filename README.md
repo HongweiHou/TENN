@@ -30,9 +30,9 @@ This toolbox includes several pluggable neural modules, each aligned with a theo
 
 | Module 🧩 (abbr.)                           | Location 📂                   | Function ⚙️                                               | Dimensions 🔢                                                                                   |
 |:-------------------------------------------|:------------------------------|:----------------------------------------------------------|:-----------------------------------------------------------------------------------------------|
-| **MDE**<br>    | `TE_models/TE_module.py`      | Equivariant linear layer preserving N-mode permutations.  | **In**: $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: $\mathrm{bs}\times M_1\times…\times M_N\times D_O$ |
-| **HOE**<br>         | `TE_models/TE_module.py`      | p→q mode equivariance mappings (e.g. 1→2 order).           | **In**: $\mathrm{bs}\times M\times D_I$  <br> **Out**: $\mathrm{bs}\times M\times M\times D_I$   |
-| **MDI**<br>     | `TE_models/TE_module.py`      | Attention pooling invariant to any mode permutations.     | **In**: $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: $\mathrm{bs}\times D_O$                |
+| **MDE**<br>    | `TE_models/TE_module.py`      | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions.  | **In**: $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: $\mathrm{bs}\times M_1\times…\times M_N\times D_O$ |
+| **HOE**<br>         | `TE_models/TE_module.py`      | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example).           | **In**: $\mathrm{bs}\times M\times D_I$  <br> **Out**: $\mathrm{bs}\times M\times M\times D_I$   |
+| **MDI**<br>     | `TE_models/TE_module.py`      | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: $\mathrm{bs}\times M_1\times…\times M_N\times D_I$  <br> **Out**: $\mathrm{bs}\times D_O$                |
 
 
 
