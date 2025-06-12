@@ -49,6 +49,9 @@ The `PrecodingTECFP` network includes:
 
 This precoding network maps Channel State Information (CSI) to optimal precoding tensors and auxiliary tensors, solving the WMMSE precoding problem as described in the paper.
 
+<!-- 在这里插入图片，文字会自动环绕 -->
+<img src="imgs/TENN_USN.png" align="left" width="400px" hspace="10" alt="Paper Preview" />
+
 ### 📌 Example 2: Scheduling
 The `SchedulingTEUSN` network, trained with both WMMSE and MMSE encoding methods, includes:
 - A multidimensional equivariant network
