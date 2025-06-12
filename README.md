@@ -31,11 +31,11 @@ Some examples of TE:
 
 This toolbox includes several pluggable neural modules, each aligned with a theoretical symmetry property:
 
-| Module 🧩 (abbr.)                           | Location 📂                   | Function ⚙️                                               | Dimensions 🔢                                                                                   |
-|:-------------------------------------------|:------------------------------|:----------------------------------------------------------|:-----------------------------------------------------------------------------------------------|
-| **MDE**<br>    | `TE_models/TE_module.py`      | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions.  | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_O$ |
-| **HOE**<br>         | `TE_models/TE_module.py`      | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example).           | **In**: <br> $\mathrm{bs}\times M\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M\times M\times D_I$   |
-| **MDI**<br>     | `TE_models/TE_module.py`      | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times D_O$                |
+| Module 🧩 (abbr.)                           | Function ⚙️                                               | Dimensions 🔢                                                                                   |
+|:-------------------------------------------|:----------------------------------------------------------|:-----------------------------------------------------------------------------------------------|
+| **MDE**<br>    | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions.  | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_O$ |
+| **HOE**<br>        | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example).           | **In**: <br> $\mathrm{bs}\times M\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times M\times M\times D_I$   |
+| **MDI**<br>     | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions.     | **In**: <br> $\mathrm{bs}\times M_1\times \dots \times M_N\times D_I$  <br> **Out**: <br> $\mathrm{bs}\times D_O$                |
 
 
 <!-- 在这里插入图片，文字会自动环绕 -->
