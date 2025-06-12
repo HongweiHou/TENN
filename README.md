@@ -102,7 +102,7 @@ Contains scheduling-related models and training code (Example 2):
 ### `examples/save_models/`
 Stores network training results.
 
-## Usage
+## 🚀 Usage
 
 ### Multidimensional Equivariant Network (MDE_Network)
 
