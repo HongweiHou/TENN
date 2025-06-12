@@ -28,11 +28,11 @@ Some examples of TE:
 
 This toolbox includes several pluggable neural modules, each aligned with a theoretical symmetry property:
 
-| Module | Location | Function | Input Dimension | Output Dimension|
-|--------|----------|----------|----------|----------|
-| Multidimensional Equivariant Module | `tensor_equivariance/modules/equivariant_invariant.py` | The equivalent linear module when any fully connected layer satisfies permutation equivariance across an arbitrary number of dimensions. | ${\rm bs}\times M_1\times M_2\times \cdots \times M_N \times D_{\rm I}$ | ${\rm bs}\times M_1\times M_2\times \cdots \times M_N \times D_{\rm O}$
-| High-Order Equivariant Module | path | The equivalent linear module when an arbitrary fully connected layer exhibits equivariance to identical permutations across multiple input and output dimensions. (taking 1-2-order equivariance as an example) | ${\rm bs}\times M \times D_{\rm I}$ | ${\rm bs}\times M \times M \times D_{\rm I}$ 
-| Multidimensional Invariant Module | path | A nonlinear module based on the attention mechanism that satisfies permutation invariance across an arbitrary number of dimensions. | ${\rm bs}\times M_1\times M_2\times \cdots \times M_N \times D_{\rm I}$ | ${\rm bs}\times D_{\rm O}$
+| Module 🧩                        | Location 📂                                                             | Function ⚙️                                                                          | Input Dim 📥                | Output Dim 📤               |
+|:--------------------------------|:----------------------------------------------------------------------|:-------------------------------------------------------------------------------------|:---------------------------:|:---------------------------:|
+| **Multidimensional Equivariant**<br><sub>MDE</sub> | <code>tensor_equivariance/modules/equivariant_invariant.py</code>      | Equivariant linear layer preserving permutations across N modes.                     | <code>bs×M₁×…×Mₙ×D<sub>I</sub></code> | <code>bs×M₁×…×Mₙ×D<sub>O</sub></code> |
+| **High-Order Equivariant**<br><sub>HOE</sub>      | <code>tensor_equivariance/modules/equivariant_invariant.py</code>      | Equivariant mappings for p→q mode permutations (e.g., 1→2-order equivariance).       | <code>bs×M×D<sub>I</sub></code>      | <code>bs×M×M×D<sub>I</sub></code>     |
+| **Multidimensional Invariant**<br><sub>MDI</sub>  | <code>tensor_equivariance/modules/equivariant_invariant.py</code>      | Attention-based pooling invariant to any mode permutations.                          | <code>bs×M₁×…×Mₙ×D<sub>I</sub></code> | <code>bs×D<sub>O</sub></code>        |
 
 
 
@@ -154,7 +154,7 @@ If you use this toolbox in your research, please cite our [paper](https://arxiv.
 
 
 ## 🤝 Acknowledgments
-We thank Jinshuo Zhang (a graduate student at Southeast University) for his support in generating the simulation results and for his efforts in organizing and polishing the code for open-source release. We also sincerely thank all the reviewers and editors of this paper for their insightful comments and valuable suggestions.
+We thank Jinshuo Zhang (a graduate student at Southeast University) for his efforts in organizing and polishing the code for open-source release. We also sincerely thank all the reviewers and editors of this paper for their insightful comments and valuable suggestions.
 
 
 
