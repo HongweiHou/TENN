@@ -7,7 +7,13 @@ import math
 
 class MDI_Module(nn.Module):
     """
-    Multidimensional invariant module
+    Multidimensional Invariant Module.
+    Applies permutation-invariant operations (e.g., pooling and attention) along specified axes.
+
+    Args:
+        d_feature (int): Feature dimension.
+        num_heads (int): Number of attention heads.
+        dim (list): List of axes indices for invariance.
     """
 
     def __init__(self, d_feature, num_heads, dim):
@@ -20,8 +26,10 @@ class MDI_Module(nn.Module):
 
     def forward(self, x):
         """
-        :param x: [bs, M1, M2, ..., MN, d_feature]
-        :return: [bs, M1, M2, ..., MN, d_feature], where dimensions in 'dim' are deleted by MDI
+        Args:
+            x: [batch_size, M1, M2, ..., MN, d_feature]
+        Returns:
+            Tensor with specified invariant axes pooled out.
         """
         sp = x.size()
         sp = list(sp)
