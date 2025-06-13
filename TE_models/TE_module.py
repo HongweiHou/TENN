@@ -114,30 +114,29 @@ class HOE_1_2_Module(nn.Module):
 
     def forward(self, x):
         """
-        :param x: [bs, ue_num, rx_ant_num, d_hidden]
-        :return: [bs, ue_num, rx_ant_num, rx_ant_num, d_hidden]
+        Args:
+            x (torch.Tensor): input tensor of shape (batch_size, N, M, F)
+        Returns:
+            torch.Tensor: output tensor of shape (batch_size, N, M, D)
         """
-        # [bs, ue_num, rx_ant_num, d_hidden]
-        sp = x.size()
-        # [bs, ue_num, d_hidden, rx_ant_num]
-        x = x.permute(0, 1, 3, 2)
-        # [bs, ue_num, d_hidden, rx_ant_num, rx_ant_num]
+        B, N, M, F = x.shape
+        x = x.permute(0, 1, 3, 2) # shape = (B, N, F, M)
+        
+        # Build the five equivariant components (all shape (B, N, F, M, M))
         x1 = torch.diag_embed(x)
-        # [bs, ue_num, d_hidden, rx_ant_num, rx_ant_num]
-        x2 = x.unsqueeze(-1).repeat(1, 1, 1, 1, sp[2])
-        # [bs, ue_num, d_hidden, rx_ant_num, rx_ant_num]
-        x3 = x.unsqueeze(-2).repeat(1, 1, 1, sp[2], 1)
-        # [bs, ue_num, d_hidden, rx_ant_num, rx_ant_num]
+        x2 = x.unsqueeze(-1).repeat(1, 1, 1, 1, M)
+        x3 = x.unsqueeze(-2).repeat(1, 1, 1, M, 1)
         x4 = torch.diag_embed(torch.mean(x, dim=3, keepdim=True).expand_as(x))
-        # [bs, ue_num, d_hidden, rx_ant_num, rx_ant_num]
-        x5 = torch.mean(x, dim=3, keepdim=True).expand_as(x).unsqueeze(-1).repeat(1, 1, 1, 1, sp[2])
+        x5 = torch.mean(x, dim=3, keepdim=True).expand_as(x).unsqueeze(-1).repeat(1, 1, 1, 1, M)
+
+        # Concatenate and reshape to (B, N, M, M, 5*F)
         xAll = torch.cat([x1, x2, x3, x4, x5], 2).permute(0, 1, 3, 4, 2)
-        # [bs, ue_num, rx_ant_num, rx_ant_num, d_hidden]
+        # Project back to F features, normalize and activate
         y = self.act(self.ln(self.fc1(xAll)))
 
+        # Add learnable bias on the diagonal
         bias_rep = self.bias.repeat(sp[0], sp[1], sp[2], sp[2], 1)
         device = bias_rep.device
-        # [1, 1, rx_ant_num, rx_ant_num, 1]
         mask = torch.eye(sp[2]).unsqueeze(0).unsqueeze(0).unsqueeze(-1).to(device)
         bias_rep = bias_rep * mask
         y = y + bias_rep
@@ -148,7 +147,12 @@ class HOE_1_2_Module(nn.Module):
 
 class MDE_Module(nn.Module):
     """
-    Multidimensional equivariant module
+    Multidimensional Equivariant Module.
+
+    Args:
+        in_features (int): Input feature dimension.
+        out_features (int): Output feature dimension.
+        dim (list): List of axes for equivariant pooling.
     """
 
     def __init__(self, in_features, out_features, dim=[1, 2, 3, [1, 2], [1, 3], [2, 3], [1, 2, 3]]):
@@ -169,9 +173,13 @@ class MDE_Module(nn.Module):
 
 class MDE_Module_LowFLOPs(nn.Module):
     """
-    Multidimensional equivariant module
-    Perform linear processing before applying expansion, and then sum up.
-    Reduction of FLOPs is achieved by avoiding redundant operations.
+    Multidimensional Equivariant Module (Low FLOPs version).
+    Applies linear transformation before expanding to avoid redundant computations.
+
+    Args:
+        in_features (int): Input feature dimension.
+        out_features (int): Output feature dimension.
+        dim (list): List of axes for equivariant pooling.
     """
 
     def __init__(self, in_features, out_features, dim=[1, 2, 3, [1, 2], [1, 3], [2, 3], [1, 2, 3]]):
