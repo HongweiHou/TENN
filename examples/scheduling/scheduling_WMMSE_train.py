@@ -2,7 +2,7 @@ import os
 
 import scheduling_func
 import scheduling_models
-from example.precoding import precoding_models
+from examples.precoding import precoding_models
 from TE_models import init_func
 from TE_models import TE_models
 
