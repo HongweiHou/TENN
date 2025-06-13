@@ -117,7 +117,7 @@ class HOE_1_2_Module(nn.Module):
         Args:
             x (torch.Tensor): input tensor of shape (batch_size, N, M, F)
         Returns:
-            torch.Tensor: output tensor of shape (batch_size, N, M, D)
+            torch.Tensor: output tensor of shape (batch_size, N, M, M, D)
         """
         B, N, M, F = x.shape
         x = x.permute(0, 1, 3, 2) # shape = (B, N, F, M)
