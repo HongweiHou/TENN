@@ -5,8 +5,8 @@ from scipy.io import loadmat
 from datetime import datetime
 import os
 import warnings
-from precoding_models import cal_sum_rate_mimo
 
+from precoding_models import cal_sum_rate_mimo
 from TE_models import init_func
 
 
