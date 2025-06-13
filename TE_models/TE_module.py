@@ -162,8 +162,8 @@ class MDE_Module(nn.Module):
 
     def forward(self, x):
         """
-        :param x: [bs, ue_num, rx_ant_num, tx_ant_num, in_features]
-        :return: [bs, ue_num, rx_ant_num, tx_ant_num, out_features]
+        :param x: [bs, dim_1, ..., dim_n, d_input]  dim_1, ..., dim_n are dims exhibit multidimensional equivariance
+        :return: [bs, dim_1, ..., dim_n, d_output]
         """
         pooled = [torch.mean(x, d, keepdim=True).expand_as(x) for d in self.dim]
         state = torch.cat([x] + pooled, dim=-1)
@@ -193,8 +193,8 @@ class MDE_Module_LowFLOPs(nn.Module):
 
     def forward(self, x):
         """
-        :param x: [bs, ue_num, rx_ant_num, tx_ant_num, in_features]
-        :return: [bs, ue_num, rx_ant_num, tx_ant_num, out_features]
+        :param x: [bs, dim_1, ..., dim_n, d_input]  dim_1, ..., dim_n are dims exhibit multidimensional equivariance
+        :return: [bs, dim_1, ..., dim_n, d_output]
         """
         y = self.linear(x)
         for i, layer in enumerate(self.layers):
