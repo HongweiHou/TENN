@@ -187,4 +187,3 @@ def precoding_test(precoding_test_param):
     # save
     np.savetxt(net_folder + 'sumRateModel.txt', sum_rate_model, fmt='%0.8f')
 
-    return 0
