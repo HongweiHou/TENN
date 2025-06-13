@@ -183,7 +183,7 @@ class HOE_2_1_Module(nn.Module):
         op5 = mean_all.expand(-1, -1, -1, M)
 
         x = torch.cat([op1, op2, op3, op4, op5], dim=2)
-        x = x.permute(0, 1, 3, 2) # shape = (B, N, M, M, F)
+        x = x.permute(0, 1, 3, 2) # shape = (B, N, M, F)
         
         x = self.act(self.norm(self.fc1(x)))
         y = self.fc2(x)
