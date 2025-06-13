@@ -214,7 +214,7 @@ class HOE_2_2_Module(nn.Module):
         x = x.permute(0,3,1,2) # (B,F,M,M)
 
         diag_part = torch.diagonal(x, dim1=-2, dim2=-1)
-        mean_diag_part = diag_part.mean(dim=-1, keepdims=True) 
+        mean_diag_part = diag_part.mean(dim=-1, keepdim=True) 
         mean_rows = x.mean(dim=-1)  
         mean_cols = x.mean(dim=-2)  
         mean_all = x.mean(dim=(-2, -1))
@@ -223,7 +223,7 @@ class HOE_2_2_Module(nn.Module):
         ops[1] = torch.diag_embed(diag_part)  
         ops[2] = torch.diag_embed(torch.tile(mean_diag_part, (1, 1, sp[2])))
         ops[3] = torch.diag_embed(mean_rows)
-        ops[4] = torch.diag_embed(mean_rows)
+        ops[4] = torch.diag_embed(mean_cols)
         ops[5] = torch.diag_embed(torch.tile(mean_all.unsqueeze(-1), (1, 1, sp[2])))
 
         ops[6] = torch.tile(mean_cols.unsqueeze(3), (1, 1, 1, sp[2]))
