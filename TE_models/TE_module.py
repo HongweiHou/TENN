@@ -171,16 +171,16 @@ class HOE_2_1_Module(nn.Module):
         x = x.permute(0, 1, 4, 2, 3) # shape = (B, N, F, M, M)
 
         diag = torch.diagonal(x, dim1=-2, dim2=-1)
-        sum_diag = diag.sum(dim=3, keepdim=True)
-        sum_rows = x.sum(dim=4)
-        sum_cols = x.sum(dim=3)
-        sum_all  = x.sum(dim=(3, 4), keepdim=True).unsqueeze(-1)
+        mean_diag = diag.mean(dim=3, keepdim=True)
+        mean_rows = x.mean(dim=4)
+        mean_cols = x.mean(dim=3)
+        mean_all  = x.mean(dim=(3, 4), keepdim=True).unsqueeze(-1)
 
         op1 = diag
-        op2 = sum_diag.expand(-1, -1, -1, M)
-        op3 = sum_rows
-        op4 = sum_cols
-        op5 = sum_all.expand(-1, -1, -1, M)
+        op2 = mean_diag.expand(-1, -1, -1, M)
+        op3 = mean_rows
+        op4 = mean_cols
+        op5 = mean_all.expand(-1, -1, -1, M)
 
         x = torch.cat([op1, op2, op3, op4, op5], dim=2)
         x = x.permute(0, 1, 3, 4, 2) # shape = (B, N, M, M, F)
