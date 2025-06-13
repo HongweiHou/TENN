@@ -15,7 +15,7 @@ def precoding_train(precoding_train_param):
     Train a precoding neural network.
     :param precoding_train_param: Parameter set for the training function.
     """
-    # load parameters from precoding_train_param
+    # Load parameters from precoding_train_param
     model = precoding_train_param.model
     net_name = precoding_train_param.net_name
     iter_num = precoding_train_param.iter_num
@@ -33,7 +33,7 @@ def precoding_train(precoding_train_param):
     else:
         run_device = 'cpu'
 
-    # transmit power
+    # Transmit power
     pt = 1
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
@@ -43,7 +43,7 @@ def precoding_train(precoding_train_param):
     if init:
         init_func.init_weights(model, init_type='kaiming')
 
-    # load channel
+    # Load channel
     hfreq_list = loadmat(in_folder + data_name + ".mat")
     hfreq_list = hfreq_list["HList"]
 
@@ -67,7 +67,7 @@ def precoding_train(precoding_train_param):
         sum_rate_model_all = 0
 
         for iter_id in range(print_cyc):
-            # randomly get training data
+            # Randomly get training data
             np.random.shuffle(index_all)
             data_index = index_all[0:batch_size]
             channel = h_train[data_index, :, :, :]
@@ -76,21 +76,21 @@ def precoding_train(precoding_train_param):
             channel = channel.to(run_device)
             noise_power = noise_power.to(run_device)
 
-            # network precoding method
+            # Network precoding method
             model_prec_mat = model(channel, noise_power, pt)
             loss_model = - torch.mean(torch.sum(cal_sum_rate_mimo(channel, model_prec_mat, noise_power), 1))
 
-            # back propagation
+            # Back propagation
             optimizer.zero_grad()
             loss_model.backward()
             optimizer.step()
 
             sum_rate_model_all = sum_rate_model_all - float(loss_model.detach().cpu().numpy())
 
-            # update learnig-rate
+            # Update learnig-rate
             lr_manager.step()
 
-        # print
+        # Print
         toc_print = datetime.now()
         iter_id_now = iter_id_now + print_cyc
         print('iter:[{0}]\t' 'sumRateModel:{loss:.3f}\t' 'lr:{learnrate:f}\t' 'time:{time:.3f}secs\t'.format(
@@ -100,11 +100,11 @@ def precoding_train(precoding_train_param):
     toc = datetime.now()
     print('Elapsed time: %f seconds' % (toc - tic).total_seconds())
 
-    # save
+    # Save
     torch.save({'state_dict': model.state_dict()}, out_folder + net_name + '.pth.tar')
     np.savetxt(out_folder + 'loss_history.txt', loss_history, fmt='%0.8f')
 
-    # evaluate model performance on the test set
+    # Evaluate model performance on the test set
     batch_size_test = 1000
     precoding_test_set = init_func.PrecodingTestParam(model, net_name, in_folder, out_folder, data_name,
                                                       batch_size_test, snr_list)
@@ -116,7 +116,7 @@ def precoding_test(precoding_test_param):
     To test a trained precoding network.
     :param precoding_test_param: The param set of the test function
     """
-    # load parameters from precoding_test_param
+    # Load parameters from precoding_test_param
     model = precoding_test_param.model
     net_name = precoding_test_param.net_name
     in_folder = precoding_test_param.in_folder
@@ -135,7 +135,7 @@ def precoding_test(precoding_test_param):
         print(net_folder)
         warnings.warn('There exists no netFolder.')
 
-    # load test data
+    # Load test data
     hfreq_list = loadmat(in_folder + data_name + ".mat")
     hfreq_list = hfreq_list["HList"]
 
@@ -145,11 +145,11 @@ def precoding_test(precoding_test_param):
     h_test = torch.from_numpy(hfreq_list[(start + train_h_num):(start + train_h_num + test_h_num), :, :].copy()).to(
         torch.complex64).to(run_device)
 
-    # load trained model
+    # Load trained model
     model.load_state_dict((torch.load(net_folder + net_name + '.pth.tar'))['state_dict'])
     model = model.to(run_device)
 
-    # test the model
+    # Test the model
     model.eval()
     h_batch_num = int(test_h_num / batch_size)
     h_id_list = np.linspace(0, test_h_num - 1, test_h_num).astype(np.int_)
@@ -162,17 +162,17 @@ def precoding_test(precoding_test_param):
             snr = snr_list[snrId] * torch.ones(batch_size, 1)
             noise_power = (1 / (10 ** (snr / 10))).to(channel.device)
 
-            # network method
+            # Network method
             model_prec_mat = model(channel, noise_power, pt)
             loss_model = - torch.mean(torch.sum(cal_sum_rate_mimo(channel, model_prec_mat, noise_power), 1))
             sum_rate_model_list[h_batch_id, snrId] = -float(loss_model.detach().cpu().numpy())
     toc_print = datetime.now()
-    # print
+    # Print
     sum_rate_model = np.mean(sum_rate_model_list, 0)
 
     print('Elapsed time: %f seconds' % (toc_print - tic_print).total_seconds())
     print(sum_rate_model)
-    # plot
+    # Plot
     plt.style.use('fivethirtyeight')
     plt.plot(snr_list, sum_rate_model, label='SR')
     font2 = {'family': 'Times New Roman',
@@ -184,6 +184,6 @@ def precoding_test(precoding_test_param):
     plt.legend()
     plt.tight_layout()
     plt.show()
-    # save
+    # Save
     np.savetxt(net_folder + 'sumRateModel.txt', sum_rate_model, fmt='%0.8f')
 
