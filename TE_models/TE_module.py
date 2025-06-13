@@ -213,14 +213,14 @@ class HOE_2_2_Module(nn.Module):
         sp = x.size()
         x = x.permute(0,3,1,2) # (B,F,M,M)
 
-        diag_part = torch.diagonal(x, dim1=-2, dim2=-1)  # N x D x m
-        mean_diag_part = diag_part.mean(dim=-1, keepdims=True)  # N x D x 1
-        mean_rows = x.mean(dim=-1)  # N x D x m
-        mean_cols = x.mean(dim=-2)  # N x D x m
-        mean_all = x.mean(dim=(-2, -1))  # N x D
+        diag_part = torch.diagonal(x, dim1=-2, dim2=-1)
+        mean_diag_part = diag_part.mean(dim=-1, keepdims=True) 
+        mean_rows = x.mean(dim=-1)  
+        mean_cols = x.mean(dim=-2)  
+        mean_all = x.mean(dim=(-2, -1))
 
         ops = [None] * (15 + 1)
-        ops[1] = torch.diag_embed(diag_part)  # N x D x m x m
+        ops[1] = torch.diag_embed(diag_part)  
         ops[2] = torch.diag_embed(torch.tile(mean_diag_part, (1, 1, sp[2])))
         ops[3] = torch.diag_embed(mean_rows)
         ops[4] = torch.diag_embed(mean_rows)
