@@ -1,9 +1,9 @@
-# -*-coding:utf-8-*-
 import precoding_func
 import precoding_models
+import os
+
 from TE_models import init_func
 from TE_models import TE_models
-import os
 
 if __name__ == '__main__':
     init_func.setup_seed(3407)
