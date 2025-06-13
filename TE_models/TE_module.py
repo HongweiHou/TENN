@@ -145,6 +145,52 @@ class HOE_1_2_Module(nn.Module):
         return y
 
 
+class HOE_2_1_Module(nn.Module):
+    """
+    2-1 Order Equivariant Module.
+
+    Args:
+        in_features (int):  F, number of input feature channels.
+        out_features (int): D, number of output feature channels.
+    """
+    def __init__(self, in_features, out_features):
+        super().__init__()
+        self.fc1  = nn.Linear(5 * in_features, in_features)
+        self.fc2  = nn.Linear(in_features, out_features)
+        self.norm = nn.LayerNorm(in_features)
+        self.act  = nn.ReLU()
+
+    def forward(self, x):
+        """
+        Args:
+            x (torch.Tensor): input tensor of shape (batch_size, N, M, M, F)
+        Returns:
+            torch.Tensor: output tensor of shape (batch_size, N, M, D)
+        """
+        B, N, M, _, F = x.shape
+        x = x.permute(0, 1, 4, 2, 3) # shape = (B, N, F, M, M)
+
+        diag = torch.diagonal(x, dim1=-2, dim2=-1)
+        sum_diag = diag.sum(dim=3, keepdim=True)
+        sum_rows = x.sum(dim=4)
+        sum_cols = x.sum(dim=3)
+        sum_all  = x.sum(dim=(3, 4), keepdim=True).unsqueeze(-1)
+
+        op1 = diag
+        op2 = sum_diag.expand(-1, -1, -1, M)
+        op3 = sum_rows
+        op4 = sum_cols
+        op5 = sum_all.expand(-1, -1, -1, M)
+
+        x = torch.cat([op1, op2, op3, op4, op5], dim=2)
+        x = x.permute(0, 1, 3, 4, 2) # shape = (B, N, M, M, F)
+        
+        x = self.act(self.norm(self.fc1(x)))
+        y = self.fc2(x)
+        return y
+
+
+
 class MDE_Module(nn.Module):
     """
     Multidimensional Equivariant Module.
