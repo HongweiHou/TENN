@@ -33,7 +33,7 @@ class MDI_Module(nn.Module):
         """
         sp = x.size()
         sp = list(sp)
-        # Perform invariant modules on all dimensions that exhibit invariance.
+        # Perform invariant modules on all dimensions that exhibit invariance (in descending order to avoid index shift).
         for i, layer in enumerate(self.layers):
             x = layer(x)
         dim = sorted(self.dim, reverse=True)
@@ -46,7 +46,7 @@ class MDI_Module(nn.Module):
 
 class MDI_Layer(nn.Module):
     """
-    Permutation invariant layer
+    Permutation-Invariant Attention Layer for a single axis.
     """
 
     def __init__(self, d_feature, num_heads, dim):
@@ -65,20 +65,25 @@ class MDI_Layer(nn.Module):
 
     def forward(self, x):
         """
-        :param x: [bs, ..., dim_to_pool, ... , d_feature]
-        :return: [bs, ..., 1 , ..., d_feature]
+        Args:
+            x: [..., dim_to_pool, ..., d_feature]
+        Returns:
+            Tensor pooled over dim_to_pool axis.
         """
+        # Move the axis to be pooled to the second last position
         x = torch.moveaxis(x, self.dim, -2)
         sp = x.size()
+        # Flatten all batch and spatial dimensions except the axis to pool and feature
         x = x.flatten(start_dim=0, end_dim=-3)
-
+        # Repeat query vector for batch
         q = self.fc_q(self.s.repeat(x.size(0), 1, 1))
         k, v = self.fc_k(x), self.fc_v(x)
+        # Multi-head split
         dim_split = self.d_feature // self.num_heads
         q_ = torch.cat(q.split(dim_split, 2), 0)
         k_ = torch.cat(k.split(dim_split, 2), 0)
         v_ = torch.cat(v.split(dim_split, 2), 0)
-
+        # Attention
         a = torch.softmax(q_.bmm(k_.transpose(1, 2)) / math.sqrt(self.d_feature), 2)
         o = torch.cat((q_ + a.bmm(v_)).split(q.size(0), 0), 2)
         o = o + F.relu(self.fc_o(o))
@@ -92,7 +97,11 @@ class MDI_Layer(nn.Module):
 
 class HOE_1_2_Module(nn.Module):
     """
-     1-2 order equivariant module.
+    1-2 Order Equivariant Module.
+
+    Args:
+        d_input (int): Input feature dimension.
+        d_output (int): Output feature dimension.
     """
 
     def __init__(self, d_input, d_output):
