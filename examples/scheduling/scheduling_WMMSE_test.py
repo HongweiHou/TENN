@@ -14,14 +14,14 @@ if __name__ == '__main__':
     data_name = 'scheduling_data'
     is_gpu = True
 
-    # define the precoding network
+    # Define the precoding network
     with open(prec_folder+'MDE_dim_list.txt', 'r') as f:
         MDE_dim_list_prec = f.read()
     MDE_dim_list_prec = eval(MDE_dim_list_prec)
     prec_net = precoding_models.PrecodingTECFP(d_input=3, d_hidden=8, n_layer=3, MDE_dim_list=MDE_dim_list_prec)
     pick_num = 8
 
-    # define the scheduling network
+    # Define the scheduling network
     with open(net_folder+'MDE_dim_list.txt', 'r') as f:
         MDE_dim_list = f.read()
     MDE_dim_list = eval(MDE_dim_list)
