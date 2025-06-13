@@ -1,6 +1,6 @@
-# -*-coding:utf-8-*-
 import precoding_func
 import precoding_models
+
 from TE_models import init_func
 
 if __name__ == '__main__':
