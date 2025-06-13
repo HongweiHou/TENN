@@ -174,7 +174,7 @@ class HOE_2_1_Module(nn.Module):
         mean_diag = diag.mean(dim=3, keepdim=True)
         mean_rows = x.mean(dim=4)
         mean_cols = x.mean(dim=3)
-        mean_all  = x.mean(dim=(3, 4), keepdim=True).unsqueeze(-1)
+        mean_all  = x.mean(dim=(3, 4), keepdim=True).squeeze(-1)
 
         op1 = diag
         op2 = mean_diag.expand(-1, -1, -1, M)
