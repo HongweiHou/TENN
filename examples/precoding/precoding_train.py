@@ -20,47 +20,47 @@ if __name__ == '__main__':
     snr_list = [0, 5, 10, 15, 20, 25, 30, 35, 40]
     is_gpu = True
 
-    # define precoding-network-Original
+    # Define precoding-network-Original
     MDE_dim_list = TE_models.generate_patterns(n_layer=3, n_dim=3, pattern='original')
-    # save the MDE_dim_list
+    # Save the MDE_dim_list
     MDE_dim_string = str(MDE_dim_list)
     with open(out_folder+'MDE_dim_list.txt', 'w') as f:
         f.write(MDE_dim_string)
     model = precoding_models.PrecodingTECFP(d_input=3, d_hidden=8, n_layer=3, MDE_dim_list=MDE_dim_list)
 
-    # define the network-Pattern1
+    # Define the network-Pattern1
     # MDE_dim_list = TE_models.generate_patterns(n_layer=3, n_dim=3, pattern='pattern1')
-    # # save the MDE_dim_list
+    # # Save the MDE_dim_list
     # MDE_dim_string = str(MDE_dim_list)
     # with open(out_folder+'MDE_dim_list.txt', 'w') as f:
     #     f.write(MDE_dim_string)
     # model = precoding_models.PrecodingTECFP(d_input=3, d_hidden=8, n_layer=3, MDE_dim_list=MDE_dim_list)
 
-    # define the network-Pattern2
+    # Define the network-Pattern2
     # is_random = False
     # if is_random:
     #     MDE_dim_list = TE_models.generate_patterns(n_layer=3, n_dim=3, pattern='pattern2', dim_per_layer=2)
     # else:
     #     MDE_dim_list = [[[1], [2]], [[2], [3]], [[1], [3]]]
-    # # save the MDE_dim_list
+    # # Save the MDE_dim_list
     # MDE_dim_string = str(MDE_dim_list)
     # with open(out_folder+'MDE_dim_list.txt', 'w') as f:
     #     f.write(MDE_dim_string)
     # model = precoding_models.PrecodingTECFP(d_input=3, d_hidden=8, n_layer=3, MDE_dim_list=MDE_dim_list)
 
-    # define the network-Pattern3
+    # Define the network-Pattern3
     # is_random = False
     # if is_random:
     #     MDE_dim_list = TE_models.generate_patterns(n_layer=3, n_dim=3, pattern='pattern3')
     # else:
     #     MDE_dim_list = [[[1]], [[2]], [[3]]]
-    # # save the MDE_dim_list
+    # # Save the MDE_dim_list
     # MDE_dim_string = str(MDE_dim_list)
     # with open(out_folder+'MDE_dim_list.txt', 'w') as f:
     #     f.write(MDE_dim_string)
     # model = precoding_models.PrecodingTECFP(d_input=3, d_hidden=8, n_layer=3, MDE_dim_list=MDE_dim_list)
 
-    # train the network
+    # Train the network
     precoding_train_param = init_func.PrecodingTrainParam(model, net_name, iter_num, lr_step_size, in_folder,
                                                           out_folder, data_name, learn_rate,
                                                           True, batch_size, snr_list, is_gpu)
