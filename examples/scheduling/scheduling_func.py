@@ -366,8 +366,6 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
     np.savetxt(net_folder + 'sumRateModel.txt', sum_rate_model, fmt='%0.8f')
     savemat(net_folder + net_name + '_etaMMSE.mat', {'etaList': eta_list})
 
-    return 0
-
 
 def sheduling_wmmse_test(scheduling_wmmse_test_param):
     """
@@ -463,4 +461,3 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
 
     savemat(net_folder + net_name + '_etaWMMSE.mat', {'etaList': eta_list})
 
-    return 0
