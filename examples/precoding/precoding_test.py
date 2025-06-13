@@ -15,13 +15,13 @@ if __name__ == '__main__':
     snr_list = [0, 5, 10, 15, 20, 25, 30, 35, 40]
     is_gpu = True
 
-    # define precoding network
+    # Define precoding network
     with open(net_folder+'MDE_dim_list.txt', 'r') as f:
         MDE_dim_list = f.read()
     MDE_dim_list = eval(MDE_dim_list)
     model = precoding_models.PrecodingTECFP(d_input=3, d_hidden=8, n_layer=3, MDE_dim_list=MDE_dim_list)
 
-    # test the network
+    # Test the network
     precoding_test_param = init_func.PrecodingTestParam(model, net_name, in_folder, net_folder, data_name, batch_size,
                                                         snr_list, is_gpu)
     precoding_func.precoding_test(precoding_test_param)
