@@ -190,6 +190,51 @@ class HOE_2_1_Module(nn.Module):
         return y
 
 
+class HOE_2_2_Module(nn.Module):
+    def __init__(self,d_input, d_output):
+        super(HOE_2_2_Module,self).__init__()
+        self.fc1 = nn.Linear(15 * d_input, d_output)
+        self.bias = nn.Parameter(torch.zeros(1, 1, 1, d_output))
+
+    def forward(self, x):
+        # shape = (B,M,M,F)
+        sp = x.size()
+        x = x.permute(0,3,1,2) # (B,F,M,M)
+
+        diag_part = torch.diagonal(x, dim1=-2, dim2=-1)  # N x D x m
+        mean_diag_part = diag_part.mean(dim=-1, keepdims=True)  # N x D x 1
+        mean_rows = x.mean(dim=-1)  # N x D x m
+        mean_cols = x.mean(dim=-2)  # N x D x m
+        mean_all = x.mean(dim=(-2, -1))  # N x D
+
+        ops = [None] * (15 + 1)
+        ops[1] = torch.diag_embed(diag_part)  # N x D x m x m
+        ops[2] = torch.diag_embed(torch.tile(mean_diag_part, (1, 1, sp[2])))
+        ops[3] = torch.diag_embed(mean_rows)
+        ops[4] = torch.diag_embed(mean_rows)
+        ops[5] = torch.diag_embed(torch.tile(mean_all.unsqueeze(-1), (1, 1, sp[2])))
+
+        ops[6] = torch.tile(mean_cols.unsqueeze(3), (1, 1, 1, sp[2]))
+        ops[7] = torch.tile(mean_rows.unsqueeze(3), (1, 1, 1, sp[2]))
+        ops[8] = torch.tile(mean_cols.unsqueeze(2), (1, 1, sp[2], 1))
+        ops[9] = torch.tile(mean_rows.unsqueeze(2), (1, 1, sp[2], 1))
+        ops[10] = x
+        ops[11] = torch.transpose(x, 2, 3)
+        ops[12] = torch.tile(diag_part.unsqueeze(3), (1, 1, 1, sp[2]))
+        ops[13] = torch.tile(diag_part.unsqueeze(2), (1, 1, sp[2], 1))
+        ops[14] = torch.tile(mean_diag_part.unsqueeze(3), (1, 1, sp[2], sp[2]))
+        ops[15] = torch.tile(mean_all.unsqueeze(-1).unsqueeze(-1), (1, 1, sp[2], sp[2]))
+
+        x = torch.cat([op for op in ops[1:]], dim=1)
+        x = x.permute(0,2,3,1) # (B,F,M,M)
+        x = self.fc1(x)
+        bias_rep = self.bias.repeat(sp[0], sp[1], sp[2], 1)
+        device = bias_rep.device
+        mask = torch.eye(sp[2]).unsqueeze(0).unsqueeze(-1).to(device)
+        bias_rep = bias_rep * mask
+        x = x + bias_rep
+        return x
+
 
 class MDE_Module(nn.Module):
     """
