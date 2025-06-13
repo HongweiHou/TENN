@@ -135,9 +135,9 @@ class HOE_1_2_Module(nn.Module):
         y = self.act(self.ln(self.fc1(xAll)))
 
         # Add learnable bias on the diagonal
-        bias_rep = self.bias.repeat(sp[0], sp[1], sp[2], sp[2], 1)
+        bias_rep = self.bias.repeat(B, N, M, M, 1)
         device = bias_rep.device
-        mask = torch.eye(sp[2]).unsqueeze(0).unsqueeze(0).unsqueeze(-1).to(device)
+        mask = torch.eye(M).unsqueeze(0).unsqueeze(0).unsqueeze(-1).to(device)
         bias_rep = bias_rep * mask
         y = y + bias_rep
 
