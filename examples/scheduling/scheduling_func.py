@@ -23,7 +23,7 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
     Train the scheduling network with labels obtained through WMMSE precoding method.
     :param scheduling_wmmse_train_param: Parameter set of the scheduling_wmmse_train function
     """
-    # load parameters from scheduling_wmmse_train_param
+    # Load parameters from scheduling_wmmse_train_param
     model = scheduling_wmmse_train_param.model
     net_name = scheduling_wmmse_train_param.net_name
     prec_net = scheduling_wmmse_train_param.prec_net
@@ -45,7 +45,7 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
     else:
         run_device = 'cpu'
 
-    # transmit power
+    # Transmit power
     pt = 1
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
@@ -54,10 +54,10 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
     if init:
         init_func.init_weights(model, init_type='kaiming')
 
-    # load the trained precoding network
+    # Load the trained precoding network
     prec_net.load_state_dict((torch.load(prec_folder + prec_net_name + '.pth.tar'))['state_dict'])
 
-    # load training data
+    # Load training data
     hfreq_list = loadmat(in_folder + data_name + ".mat")
     hfreq_list = hfreq_list["HList"]
     eta_label = loadmat(in_folder + data_name + "_etaWMMSE.mat")
@@ -77,7 +77,7 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
     lr_gamma = 0.1
     lr_manager = torch.optim.lr_scheduler.StepLR(optimizer, lr_step_size, gamma=lr_gamma, last_epoch=-1)
 
-    #  train
+    # Train
     loss_history = np.zeros((int(iter_num / print_cyc), 3))
     tic = datetime.now()
     model.train()
@@ -87,7 +87,7 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
         sum_rate_model_all = 0
         loss_all = 0
         for iter_id in range(print_cyc):
-            # randomly get training data
+            # Randomly get training data
             np.random.shuffle(index_all)
             data_index = index_all[0:batch_size]
             channel = h_train[data_index, :, :, :]
@@ -101,11 +101,11 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
             channel = channel.to(run_device)
             noise_power = noise_power.to(run_device)
 
-            # get the label
+            # Get the label
             eta_lable = eta_train[data_index, :, :].gather(1, snr_geteta.type(torch.int64).unsqueeze(
                 -1).repeat(1, 1, k_num)).squeeze(1)
 
-            # use network method to schedule
+            # Use network method to schedule
             eta_model = model(channel, noise_power)
             eta = eta_model.clone().detach()
             _, choose_model = torch.topk(eta, pick_num, 1, largest=True, sorted=False)
@@ -116,7 +116,7 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
             sumrate_model = torch.mean(torch.sum(cal_sum_rate_mimo(prec_hmodel, prec_mat_model, noise_power), 1))
             loss_model = loss_func(eta_model, eta_lable)
 
-            # back propagation
+            # Back propagation
             optimizer.zero_grad()
             loss_model.backward()
             optimizer.step()
@@ -124,9 +124,9 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
             sum_rate_model_all = sum_rate_model_all + float(sumrate_model.detach().cpu().numpy())
             loss_all = loss_all + float(loss_model.detach().cpu().numpy())
 
-            # update learnig-rate
+            # Update learnig-rate
             lr_manager.step()
-        # print
+        # Print
         toc_print = datetime.now()
         iter_id_now = iter_id_now + print_cyc
         print('iter:[{0}]\t' 'sumRateModel:{modelsumrate:.3f}\t' 'loss:{loss:.3f}\t'
@@ -140,11 +140,11 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
     toc = datetime.now()
     print('Elapsed time: %f seconds' % (toc - tic).total_seconds())
 
-    # save
+    # Save
     torch.save({'state_dict': model.state_dict()}, out_folder + net_name + '.pth.tar')
     np.savetxt(out_folder + 'loss_history.txt', loss_history, fmt='%0.8f')
 
-    # evaluate model performance on the test set
+    # Evaluate model performance on the test set
     batch_size_test = 1000
     scheduling_wmmse_test_param = init_func.SchedulingWMMSETestParam(model, net_name, prec_net, prec_folder,
                                                                      prec_net_name,
@@ -158,7 +158,7 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
     Train the scheduling network with labels obtained through MMSE precoding method.
     :param scheduling_mmse_test_param: Parameter set of the scheduling_mmse_train function
     """
-    # load parameters from scheduling_mmse_test_param
+    # Load parameters from scheduling_mmse_test_param
     model = scheduling_mmse_test_param.model
     net_name = scheduling_mmse_test_param.net_name
     pick_num = scheduling_mmse_test_param.pick_num
@@ -182,11 +182,11 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
         os.makedirs(out_folder)
     print_cyc = 400
 
-    # initialize network parameters
+    # Initialize network parameters
     if init:
         init_func.init_weights(model, init_type='kaiming')
 
-    # load the training data
+    # Load the training data
     hfreq_list = loadmat(in_folder + data_name + ".mat")
     hfreq_list = hfreq_list["HList"]
     eta_label = loadmat(in_folder + data_name + "_etaMMSE.mat")
@@ -204,7 +204,7 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
     lr_gamma = 0.1
     lr_manager = torch.optim.lr_scheduler.StepLR(optimizer, lr_step_size, gamma=lr_gamma, last_epoch=-1)
 
-    # train
+    # Train
     loss_history = np.zeros((int(iter_num / print_cyc), 3))
     [_, k_num, rx_ant_num, tx_ant_num] = h_train.size()
     tic = datetime.now()
@@ -215,7 +215,7 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
         sum_rate_model_all = 0
         loss_all = 0
         for iter_id in range(print_cyc):
-            # randomly get training data
+            # Randomly get training data
             np.random.shuffle(index_all)
             data_index = index_all[0:batch_size]
             channel = h_train[data_index, :, :, :]
@@ -225,12 +225,12 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
             channel = channel.to(run_device)
             noise_power = noise_power.to(run_device)
 
-            # get label
+            # Get label
             eta_lable = eta_train[data_index, :, :].gather(1, torch.from_numpy(snr_id).to(run_device).type(
                 torch.int64).unsqueeze(
                 -1).repeat(1, 1, k_num)).squeeze(1)
 
-            # use network to schedule
+            # Use network to schedule
             eta_model = model(channel, noise_power)
             eta = eta_model.clone().detach()
             _, choose_model = torch.topk(eta, pick_num, 1, largest=True, sorted=False)
@@ -241,7 +241,7 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
             sumrate_model = torch.mean(torch.sum(cal_sum_rate_mimo(prec_hmodel, prec_mat_model, noise_power), 1))
             loss_model = loss_func(eta_model, eta_lable)
 
-            # back propagation
+            # Back propagation
             optimizer.zero_grad()
             loss_model.backward()
             optimizer.step()
@@ -249,9 +249,9 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
             sum_rate_model_all = sum_rate_model_all + float(sumrate_model.detach().cpu().numpy())
             loss_all = loss_all + float(loss_model.detach().cpu().numpy())
 
-            # update learnig-rate
+            # Update learnig-rate
             lr_manager.step()
-        # print
+        # Print
         toc_print = datetime.now()
         iter_id_now = iter_id_now + print_cyc
         print('iter:[{0}]\t' 'sumRateModel:{modelsumrate:.3f}\t' 'loss:{loss:.3f}\t'
@@ -264,11 +264,11 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
     toc = datetime.now()
     print('Elapsed time: %f seconds' % (toc - tic).total_seconds())
 
-    # save
+    # Save
     torch.save({'state_dict': model.state_dict()}, out_folder + net_name + '.pth.tar')
     np.savetxt(out_folder + 'loss_history.txt', loss_history, fmt='%0.8f')
 
-    # evaluate model performance on the test set
+    # Evaluate model performance on the test set
     batch_size_test = 1000
     scheduling_mmse_test_param = init_func.SchedulingMMSETestParam(model, net_name, out_folder, pick_num, in_folder,
                                                                    data_name, batch_size_test, snr_list)
@@ -280,7 +280,7 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
     Test the scheduling network trained using labels obtained through MMSE precoding method.
     :param scheduling_mmse_test_param: Parameter set of the scheduling_mmse_test function
     """
-    # load parameters from scheduling_mmse_test_param
+    # Load parameters from scheduling_mmse_test_param
     model = scheduling_mmse_test_param.model
     net_name = scheduling_mmse_test_param.net_name
     net_folder = scheduling_mmse_test_param.net_folder
@@ -300,7 +300,7 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
         print(net_folder)
         warnings.warn('There exists no netFolder.')
 
-    # load test data
+    # Load test data
     hfreq_list = loadmat(in_folder + data_name + ".mat")
     hfreq_list = hfreq_list["HList"]
     train_h_num = 55000
@@ -310,7 +310,7 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
         torch.complex64).to(run_device)
     [_, k_num, rx_ant_num, tx_ant_num] = h_test.size()
 
-    # load the trained scheduling network
+    # Load the trained scheduling network
     model.load_state_dict((torch.load(net_folder + net_name + '.pth.tar'))['state_dict'])
     model = model.to(run_device)
     model.eval()
@@ -322,7 +322,7 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
     sum_rate_mmse_us = np.zeros((len(snr_list), test_h_num))
 
     eta_list = np.zeros((len(snr_list), test_h_num, k_num))
-    # test
+    # Test
     for h_batch_id in range(h_batch_num):
         h_id = h_id_list[(h_batch_id * batch_size):((h_batch_id + 1) * batch_size)]
         channel = h_test[h_id, :, :, :]
@@ -332,7 +332,7 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
             channel = channel.to(run_device)
             noise_power = noise_power.to(run_device)
 
-            # test network
+            # Test network
             eta_model = model(channel, noise_power)
             eta = eta_model.clone().detach()
             eta_list[snr_id, h_id, :] = eta_model.clone().detach().cpu().numpy()
@@ -345,12 +345,12 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
 
             sum_rate_model_list[h_batch_id, snr_id] = float(sumrate_model.detach().cpu().numpy())
     toc_print = datetime.now()
-    # print
+    # Print
     sum_rate_model = np.mean(sum_rate_model_list, 0)
 
     print('Elapsed time: %f seconds' % (toc_print - tic_print).total_seconds())
     print(sum_rate_model)
-    # plot
+    # Plot
     plt.style.use('fivethirtyeight')
     plt.plot(snr_list, sum_rate_model, label='SR')
     font2 = {'family': 'Times New Roman',
@@ -362,7 +362,7 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
     plt.legend()
     plt.tight_layout()
     plt.show()
-    # save
+    # Save
     np.savetxt(net_folder + 'sumRateModel.txt', sum_rate_model, fmt='%0.8f')
     savemat(net_folder + net_name + '_etaMMSE.mat', {'etaList': eta_list})
 
@@ -372,7 +372,7 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
     Test the scheduling network trained using labels obtained through WMMSE precoding method.
     :param scheduling_wmmse_test_param: Parameter set of the scheduling_wmmse_test function
     """
-    # load parameters from scheduling_wmmse_test_param
+    # Load parameters from scheduling_wmmse_test_param
     model = scheduling_wmmse_test_param.model
     net_name = scheduling_wmmse_test_param.net_name
     prec_net = scheduling_wmmse_test_param.prec_net
@@ -395,7 +395,7 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
         print(net_folder)
         warnings.warn('There exists no netFolder.')
 
-    # load test data
+    # Load test data
     hfreq_list = loadmat(in_folder + data_name + ".mat")
     hfreq_list = hfreq_list["HList"]
     train_h_num = 55000
@@ -404,11 +404,11 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
     h_test = torch.from_numpy(hfreq_list[(start + train_h_num):(start + train_h_num + test_h_num), :, :].copy()).to(
         torch.complex64).to(run_device)
 
-    # load trained precoding network
+    # Load trained precoding network
     prec_net.load_state_dict((torch.load(prec_folder + prec_net_name + '.pth.tar'))['state_dict'])
     prec_net = prec_net.to(run_device)
     prec_net.eval()
-    # load trained scheduling network
+    # Load trained scheduling network
     model.load_state_dict((torch.load(net_folder + net_name + '.pth.tar'))['state_dict'])
     model = model.to(run_device)
     model.eval()
@@ -419,7 +419,7 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
     sum_rate_model_list = np.zeros([h_batch_num, len(snr_list)])
     [_, k_num, rx_ant_num, tx_ant_num] = h_test.size()
     eta_list = np.zeros((len(snr_list), test_h_num, k_num))
-    # test
+    # Test
     for h_batch_id in range(h_batch_num):
         h_id = h_id_list[(h_batch_id * batch_size):((h_batch_id + 1) * batch_size)]
         channel = h_test[h_id, :, :, :]
@@ -427,7 +427,7 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
             snr = snr_list[snr_id] * torch.ones(batch_size, 1)
             noise_power = (1 / (10 ** (snr / 10)))
             noise_power = noise_power.to(channel.device)
-            # test the scheduling network
+            # Test the scheduling network
             eta_model = model(channel, noise_power)
             eta = eta_model.clone().detach()
             eta_list[snr_id, h_id, :] = eta_model.clone().detach().cpu().numpy()
@@ -440,11 +440,11 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
 
             sum_rate_model_list[h_batch_id, snr_id] = float(sumrate_model.detach().cpu().numpy())
     toc_print = datetime.now()
-    # print
+    # Print
     sum_rate_model = np.mean(sum_rate_model_list, 0)
     print('Elapsed time: %f seconds' % (toc_print - tic_print).total_seconds())
     print(sum_rate_model)
-    # plot
+    # Plot
     plt.style.use('fivethirtyeight')
     plt.plot(snr_list, sum_rate_model, label='SR')
     font2 = {'family': 'Times New Roman',
@@ -456,7 +456,7 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
     plt.legend()
     plt.tight_layout()
     plt.show()
-    # save
+    # Save
     np.savetxt(net_folder + 'sumRateModel.txt', sum_rate_model, fmt='%0.8f')
 
     savemat(net_folder + net_name + '_etaWMMSE.mat', {'etaList': eta_list})
