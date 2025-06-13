@@ -2,16 +2,15 @@ import torch
 import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.io import loadmat
-from scipy.io import savemat
-from TE_models import init_func
-from datetime import datetime
-
 import os
 import warnings
+from scipy.io import loadmat
+from scipy.io import savemat
+from datetime import datetime
+
 from precoding.precoding_models import cal_sum_rate_mimo
 from precoding.precoding_models import mmse_precoding_mimo
-
+from TE_models import init_func
 
 def scheduling_wmmse_train(scheduling_wmmse_train_param):
     """
