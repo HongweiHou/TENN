@@ -191,7 +191,7 @@ class HOE_2_1_Module(nn.Module):
 
 
 class HOE_2_2_Module(nn.Module):
-        """
+    """
     2-2 Order Equivariant Module.
 
     Args:
