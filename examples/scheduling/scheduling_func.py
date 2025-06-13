@@ -14,8 +14,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from example.precoding.precoding_models import cal_sum_rate_mimo
-from example.precoding.precoding_models import mmse_precoding_mimo
+from examples.precoding.precoding_models import cal_sum_rate_mimo
+from examples.precoding.precoding_models import mmse_precoding_mimo
 from TE_models import init_func
 
 def scheduling_wmmse_train(scheduling_wmmse_train_param):
