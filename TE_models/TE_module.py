@@ -150,8 +150,8 @@ class HOE_2_1_Module(nn.Module):
     2-1 Order Equivariant Module.
 
     Args:
-        in_features (int):  F, number of input feature channels.
-        out_features (int): D, number of output feature channels.
+        in_features (int): Number of input feature channels.
+        out_features (int): Number of output feature channels.
     """
     def __init__(self, in_features, out_features):
         super(HOE_2_1_Module, self).__init__()
@@ -191,13 +191,25 @@ class HOE_2_1_Module(nn.Module):
 
 
 class HOE_2_2_Module(nn.Module):
+        """
+    2-2 Order Equivariant Module.
+
+    Args:
+        d_input (int): Number of input feature channels.
+        d_output (int): Number of output feature channels.
+    """
     def __init__(self,d_input, d_output):
         super(HOE_2_2_Module,self).__init__()
         self.fc1 = nn.Linear(15 * d_input, d_output)
         self.bias = nn.Parameter(torch.zeros(1, 1, 1, d_output))
 
     def forward(self, x):
-        # shape = (B,M,M,F)
+        """
+        Args:
+            x (Tensor): Input tensor of shape (B, M, M, F)
+        Returns:
+            Tensor: Output tensor of shape (B, M, M, D)
+        """
         sp = x.size()
         x = x.permute(0,3,1,2) # (B,F,M,M)
 
