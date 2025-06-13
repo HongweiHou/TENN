@@ -154,7 +154,7 @@ class HOE_2_1_Module(nn.Module):
         out_features (int): D, number of output feature channels.
     """
     def __init__(self, in_features, out_features):
-        super().__init__()
+        super(HOE_2_1_Module, self).__init__()
         self.fc1  = nn.Linear(5 * in_features, in_features)
         self.fc2  = nn.Linear(in_features, out_features)
         self.norm = nn.LayerNorm(in_features)
