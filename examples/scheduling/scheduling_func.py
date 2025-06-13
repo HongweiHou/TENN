@@ -77,7 +77,7 @@ def scheduling_wmmse_train(scheduling_wmmse_train_param):
     lr_gamma = 0.1
     lr_manager = torch.optim.lr_scheduler.StepLR(optimizer, lr_step_size, gamma=lr_gamma, last_epoch=-1)
 
-    #  Train
+    #  train
     loss_history = np.zeros((int(iter_num / print_cyc), 3))
     tic = datetime.now()
     model.train()
@@ -204,7 +204,7 @@ def scheduling_mmse_train(scheduling_mmse_test_param):
     lr_gamma = 0.1
     lr_manager = torch.optim.lr_scheduler.StepLR(optimizer, lr_step_size, gamma=lr_gamma, last_epoch=-1)
 
-    # Train
+    # train
     loss_history = np.zeros((int(iter_num / print_cyc), 3))
     [_, k_num, rx_ant_num, tx_ant_num] = h_train.size()
     tic = datetime.now()
@@ -322,7 +322,7 @@ def scheduling_mmse_test(scheduling_mmse_test_param):
     sum_rate_mmse_us = np.zeros((len(snr_list), test_h_num))
 
     eta_list = np.zeros((len(snr_list), test_h_num, k_num))
-    # Test
+    # test
     for h_batch_id in range(h_batch_num):
         h_id = h_id_list[(h_batch_id * batch_size):((h_batch_id + 1) * batch_size)]
         channel = h_test[h_id, :, :, :]
@@ -419,7 +419,7 @@ def sheduling_wmmse_test(scheduling_wmmse_test_param):
     sum_rate_model_list = np.zeros([h_batch_num, len(snr_list)])
     [_, k_num, rx_ant_num, tx_ant_num] = h_test.size()
     eta_list = np.zeros((len(snr_list), test_h_num, k_num))
-    # Test
+    # test
     for h_batch_id in range(h_batch_num):
         h_id = h_id_list[(h_batch_id * batch_size):((h_batch_id + 1) * batch_size)]
         channel = h_test[h_id, :, :, :]
