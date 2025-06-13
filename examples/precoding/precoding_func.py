@@ -2,11 +2,12 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import loadmat
-from TE_models import init_func
 from datetime import datetime
 import os
 import warnings
 from precoding_models import cal_sum_rate_mimo
+
+from TE_models import init_func
 
 
 def precoding_train(precoding_train_param):
