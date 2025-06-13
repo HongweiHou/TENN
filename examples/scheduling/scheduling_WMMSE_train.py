@@ -24,14 +24,14 @@ if __name__ == '__main__':
     pick_num = 8
     is_gpu = True
 
-    # define the precoding network
+    # Define the precoding network
     with open(prec_folder+'MDE_dim_list.txt', 'r') as f:
         MDE_dim_list = f.read()
     MDE_dim_list = eval(MDE_dim_list)
     prec_net = precoding_models.PrecodingTECFP(d_input=3, d_hidden=8, n_layer=3, MDE_dim_list=MDE_dim_list)
 
-    # define the scheduling network
-    # define the network-Original
+    # Define the scheduling network
+    # Define the network-Original
     MDE_dim_list = TE_models.generate_patterns(n_layer=4, n_dim=3, pattern='original')
     # save the MDE_dim_list
     MDE_dim_string = str(MDE_dim_list)
@@ -39,33 +39,33 @@ if __name__ == '__main__':
         f.write(MDE_dim_string)
     model = scheduling_models.SchedulingTEUSN(d_input=3, d_hidden=32, n_layer=4, MDE_dim_list=MDE_dim_list)
 
-    # define the network-Pattern1
+    # Define the network-Pattern1
     # MDE_dim_list = TE_models.generate_patterns(n_layer=4, n_dim=3, pattern='pattern1')
-    # # save the MDE_dim_list
+    # # Save the MDE_dim_list
     # MDE_dim_string = str(MDE_dim_list)
     # with open(out_folder+'MDE_dim_list.txt', 'w') as f:
     #     f.write(MDE_dim_string)
     # model = scheduling_models.SchedulingTEUSN(d_input=3, d_hidden=32, n_layer=4, MDE_dim_list=MDE_dim_list)
 
-    # define the network-Pattern2
+    # Define the network-Pattern2
     # is_random = False
     # if is_random:
     #     MDE_dim_list = TE_models.generate_patterns(n_layer=4, n_dim=3, pattern='pattern2', dim_per_layer=2)
     # else:
     #     MDE_dim_list = [[[1], [2]], [[2], [3]], [[1], [3]], [[1], [2], [3]]]
-    # # save the MDE_dim_list
+    # # Save the MDE_dim_list
     # MDE_dim_string = str(MDE_dim_list)
     # with open(out_folder+'MDE_dim_list.txt', 'w') as f:
     #     f.write(MDE_dim_string)
     # model = scheduling_models.SchedulingTEUSN(d_input=3, d_hidden=32, n_layer=4, MDE_dim_list=MDE_dim_list)
 
-    # define the network-Pattern3
+    # Define the network-Pattern3
     # is_random = False
     # if is_random:
     #     MDE_dim_list = TE_models.generate_patterns(n_layer=4, n_dim=3, pattern='pattern3')
     # else:
     #     MDE_dim_list = [[[1]], [[2]], [[3]],[[2]]]
-    # # save the MDE_dim_list
+    # # Save the MDE_dim_list
     # MDE_dim_string = str(MDE_dim_list)
     # with open(out_folder+'MDE_dim_list.txt', 'w') as f:
     #     f.write(MDE_dim_string)
