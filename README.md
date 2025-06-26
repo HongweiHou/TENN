@@ -153,20 +153,20 @@ output = mdi_module(input_tensor)
 
 If you use this toolbox in your research, please cite our [paper](https://ieeexplore.ieee.org/document/11049893):
 
-> Y. Wang, H. Hou, X. Yi, W. Wang, S. Jin, “Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework,” _IEEE Trans.
+> Y. Wang, H. Hou, X. Yi, W. Wang, S. Jin, “Towards unified AI models for MU-MIMO communications: A tensor equivariance framework,” _IEEE Trans.
 Wireless Commun._, Early Access, 2025.
 
 ```bibtex
-@ARTICLE{11049893,
-  author={Wang, Yafei and Hou, Hongwei and Yi, Xinping and Wang, Wenjin and Jin, Shi},
-  journal={IEEE Transactions on Wireless Communications}, 
-  title={Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework}, 
-  year={2025},
-  volume={},
-  number={},
-  pages={1-1},
-  keywords={Artificial intelligence;tensor equivariance;unified framework;MU-MIMO transmission},
-  doi={10.1109/TWC.2025.3580321}}
+@ARTICLE{tenntoolbox,
+  author    = {Wang, Yafei and Hou, Hongwei and Yi, Xinping and Wang, Wenjin and Jin, Shi},
+  journal   = {IEEE Transactions on Wireless Communications}, 
+  title     = {Towards unified AI models for MU-MIMO communications: A tensor equivariance framework}, 
+  year      = {2025},
+  volume    = {},
+  number    = {},
+  pages     = {1-1},
+  doi       = {10.1109/TWC.2025.3580321}
+}
 ```
 
 
