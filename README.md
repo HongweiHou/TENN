@@ -2,6 +2,7 @@
 
 [![Code (GitHub)](https://img.shields.io/badge/Code-GitHub-blue?logo=github)](https://github.com/zhangjinshuowww/TENN)
 [![Paper (arXiv)](https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv)](https://arxiv.org/abs/2406.09022)
+[![Paper (IEEE)](https://img.shields.io/badge/Paper-IEEE-0052A5?logo=IEEE&logoColor=white)](https://ieeexplore.ieee.org/document/11049893)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/zhangjinshuowww/TENN/blob/main/LICENSE)
 
 A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as multi-user multiple-input multiple-output (MU-MIMO) precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)".
