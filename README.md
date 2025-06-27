@@ -7,6 +7,8 @@
 
 A unified, plug-and-play toolbox for building tensor equivariant neural networks (TENN), designed to support communication system applications such as multi-user multiple-input multiple-output (MU-MIMO) precoding, user scheduling, channel estimation, detection, demodulation, and so on. More information can be found in paper "[Towards Unified AI Models for MU-MIMO Communications: A Tensor Equivariance Framework](https://arxiv.org/abs/2406.09022)", which has been accepted for publication on top journal ***IEEE Transactions on Wireless Communications***. 
 
+### Get the Paper - **IEEE**  [DOI:10.1109/TWC.2025.3580321](https://doi.org/10.1109/TWC.2025.3580321) - **arXiv (with detailed appendix)**  [arXiv:2406.09022](https://arxiv.org/pdf/2406.09022)
+
 ## 🧠 Core Concepts
 
 This toolbox implements a unified framework for leveraging **Tensor Equivariance (TE)** into neural network design. ***By exploiting the inherent TE of the target mapping, it facilitates scalable and efficient learning in AI-assisted wireless communication systems***.
